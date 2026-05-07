@@ -1,5 +1,6 @@
 import React from "react";
 import { useCurrentFrame, useVideoConfig, interpolate, spring } from "remotion";
+import { NebulaLogo } from "../components/NebulaLogo";
 
 const DURATION = 45;
 
@@ -36,13 +37,12 @@ export const Scene9CTA: React.FC = () => {
       <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 30 }}>
         <div
           style={{
-            fontSize: 68, fontWeight: 900, letterSpacing: "-0.04em",
-            background: "linear-gradient(135deg, #C4B5FD 0%, #7C3AED 45%, #06B6D4 100%)",
-            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
             opacity: logoEnter,
             transform: `scale(${interpolate(logoEnter, [0, 1], [0.75, 1])})`,
           }}
-        >nebula</div>
+        >
+          <NebulaLogo svgWidth={80} textSize={42} gap={18} />
+        </div>
 
         <div
           style={{

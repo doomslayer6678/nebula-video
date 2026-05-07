@@ -1,5 +1,6 @@
 import React from "react";
 import { useCurrentFrame, useVideoConfig, interpolate, spring } from "remotion";
+import { NebulaLogo } from "../components/NebulaLogo";
 
 const DURATION = 90;
 
@@ -45,23 +46,13 @@ export const Scene3Intro: React.FC = () => {
           style={{
             opacity: logoEnter,
             transform: `scale(${interpolate(logoEnter, [0, 1], [0.65, 1])})`,
-            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 14,
           }}
         >
-          <div
-            style={{
-              fontSize: 88,
-              fontWeight: 900,
-              letterSpacing: "-0.04em",
-              lineHeight: 1,
-              background: "linear-gradient(135deg, #C4B5FD 0%, #7C3AED 45%, #06B6D4 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            nebula
-          </div>
+          <NebulaLogo svgWidth={120} textSize={56} gap={24} />
           <div
             style={{
               fontSize: 12,
@@ -69,7 +60,6 @@ export const Scene3Intro: React.FC = () => {
               color: "#475569",
               letterSpacing: "0.28em",
               textTransform: "uppercase",
-              marginTop: 10,
             }}
           >
             AI Recruiting Platform
