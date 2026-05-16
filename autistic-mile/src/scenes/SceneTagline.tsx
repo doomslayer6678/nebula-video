@@ -13,6 +13,9 @@ const DotGrid: React.FC<{ id: string; color: string; alpha: number }> = ({ id, c
 );
 
 const SPLIT = 46;
+const N_SLABS = 5;
+const SLAB_H = 1080 / N_SLABS; // 216px
+const SLAB_COLORS = ["#5aaee0", "#0a1020", "#5aaee0", "#0a1020", "#5aaee0"];
 
 export const SceneTagline: React.FC = () => {
   const frame = useCurrentFrame();
@@ -35,6 +38,8 @@ export const SceneTagline: React.FC = () => {
 
   return (
     <div style={{ position: "absolute", inset: 0, background: "#0c1522", overflow: "hidden" }}>
+
+      {/* Left panel */}
       <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${SPLIT}%`, background: "#5aaee0", transform: `translateX(${interpolate(leftSlide, [0, 1], [-100, 0])}%)`, overflow: "hidden" }}>
         <DotGrid id="tl-left" color="#1a2744" alpha={0.13} />
         <div style={{ position: "absolute", top: "50%", left: -40, transform: `translateX(${ghostX}px) translateY(-50%)`, fontFamily: '"Bebas Neue", Impact, "Arial Narrow", sans-serif', fontSize: 240, fontWeight: 900, color: "rgba(26,39,68,0.10)", whiteSpace: "nowrap", letterSpacing: "0.04em", lineHeight: 1, pointerEvents: "none", userSelect: "none" }}>AUTISTIC MILE · AUTISTIC MILE ·</div>
@@ -45,6 +50,8 @@ export const SceneTagline: React.FC = () => {
           {[0,1,2].map(i => (<div key={i} style={{ width: 9, height: 9, borderRadius: "50%", background: "rgba(26,39,68,0.30)", opacity: 0.5 + Math.sin(frame * 0.09 + i * 0.8) * 0.5 }} />))}
         </div>
       </div>
+
+      {/* Right panel */}
       <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: `${100 - SPLIT}%`, background: "#1a2744", transform: `translateX(${interpolate(rightSlide, [0, 1], [100, 0])}%)`, overflow: "hidden" }}>
         <DotGrid id="tl-right" color="#5aaee0" alpha={0.09} />
         <div style={{ position: "absolute", left: "8%", right: "7%", top: "12%", bottom: "12%", border: `1.5px solid rgba(90,174,224,${frameIn * 0.28})`, opacity: frameIn }} />
@@ -66,8 +73,34 @@ export const SceneTagline: React.FC = () => {
           {[0,1,2,3].map(i => (<div key={i} style={{ width: 11, height: 11, borderRadius: "50%", border: "1.5px solid rgba(90,174,224,0.45)", opacity: 0.5 + Math.sin(frame * 0.07 + i * 0.6) * 0.5 }} />))}
         </div>
       </div>
+
+      {/* Divider + traveling glow */}
       <div style={{ position: "absolute", left: `${SPLIT}%`, top: 0, bottom: 0, width: 4, marginLeft: -2, background: "linear-gradient(180deg, transparent 0%, #f5e6c8 20%, #5aaee0 50%, #f5e6c8 80%, transparent 100%)", opacity: dividerIn }} />
       <div style={{ position: "absolute", left: `${SPLIT}%`, marginLeft: -8, top: divGlowY, width: 20, height: 60, background: "radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.55) 0%, transparent 70%)", pointerEvents: "none", opacity: dividerIn }} />
+
+      {/* EXIT TRANSITION — slabs slide in from alternating sides, covering the scene */}
+      {Array.from({ length: N_SLABS }, (_, i) => {
+        const fromLeft = i % 2 === 0;
+        // Each slab has a 2-frame stagger; all arrive fully by frame 89
+        const start = 76 + i * 2;
+        const end   = start + 10;
+        const p = interpolate(frame, [start, end], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        const tx = fromLeft
+          ? interpolate(p, [0, 1], [-1920, 0])
+          : interpolate(p, [0, 1], [1920, 0]);
+        return (
+          <div key={i} style={{
+            position: "absolute",
+            left: 0,
+            top: i * SLAB_H,
+            width: 1920,
+            height: SLAB_H,
+            background: SLAB_COLORS[i],
+            transform: `translateX(${tx}px)`,
+            zIndex: 50,
+          }} />
+        );
+      })}
     </div>
   );
 };
