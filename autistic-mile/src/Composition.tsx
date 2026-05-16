@@ -1,5 +1,5 @@
 import React from "react";
-import { Sequence, Audio, staticFile } from "remotion";
+import { Sequence } from "remotion";
 import { SceneTitle } from "./scenes/SceneTitle";
 import { SceneTagline } from "./scenes/SceneTagline";
 import { SceneCredits } from "./scenes/SceneCredits";
@@ -22,8 +22,6 @@ export const AutisticMileIntro: React.FC = () => {
         position: "relative",
       }}
     >
-      <Audio src={staticFile("music.mp3")} startFrom={660} volume={1} />
-
       <Sequence from={0} durationInFrames={60}>
         <SceneTitle />
       </Sequence>
