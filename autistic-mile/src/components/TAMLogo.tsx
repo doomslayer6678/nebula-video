@@ -4,28 +4,6 @@ interface Props {
   size?: number;
 }
 
-const THE: { char: string; color: string }[] = [
-  { char: "T", color: "#E53E3E" },
-  { char: "h", color: "#DD6B20" },
-  { char: "e", color: "#D69E2E" },
-];
-const AUTISTIC: { char: string; color: string }[] = [
-  { char: "A", color: "#2F855A" },
-  { char: "u", color: "#2B6CB0" },
-  { char: "t", color: "#6B46C1" },
-  { char: "i", color: "#E53E3E" },
-  { char: "s", color: "#DD6B20" },
-  { char: "t", color: "#D69E2E" },
-  { char: "i", color: "#2F855A" },
-  { char: "c", color: "#2B6CB0" },
-];
-const MILE: { char: string; color: string }[] = [
-  { char: "M", color: "#6B46C1" },
-  { char: "i", color: "#E53E3E" },
-  { char: "l", color: "#2F855A" },
-  { char: "e", color: "#2B6CB0" },
-];
-
 export const TAMLogo: React.FC<Props> = ({ size = 320 }) => {
   return (
     <svg
@@ -34,20 +12,49 @@ export const TAMLogo: React.FC<Props> = ({ size = 320 }) => {
       viewBox="0 0 200 200"
       style={{ display: "block", overflow: "visible" }}
     >
-      {/* Outer black ring */}
-      <circle cx="100" cy="100" r="99" fill="#111111" />
-
-      {/* Inner white circle */}
-      <circle cx="100" cy="100" r="82" fill="#FFFFFF" />
-
-      {/* Arc on the black ring (r≈90) — top half, so text sits in ring area */}
       <defs>
+        {/* Left-to-right rainbow gradient for "The" */}
+        <linearGradient id="theGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stopColor="#E53E3E" />
+          <stop offset="50%"  stopColor="#DD6B20" />
+          <stop offset="100%" stopColor="#D69E2E" />
+        </linearGradient>
+
+        {/* Left-to-right rainbow gradient for "Autistic" */}
+        <linearGradient id="autisticGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stopColor="#2F855A" />
+          <stop offset="14%"  stopColor="#2B6CB0" />
+          <stop offset="29%"  stopColor="#6B46C1" />
+          <stop offset="43%"  stopColor="#E53E3E" />
+          <stop offset="57%"  stopColor="#DD6B20" />
+          <stop offset="71%"  stopColor="#D69E2E" />
+          <stop offset="86%"  stopColor="#2F855A" />
+          <stop offset="100%" stopColor="#2B6CB0" />
+        </linearGradient>
+
+        {/* Left-to-right rainbow gradient for "Mile" */}
+        <linearGradient id="mileGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stopColor="#6B46C1" />
+          <stop offset="33%"  stopColor="#E53E3E" />
+          <stop offset="67%"  stopColor="#2F855A" />
+          <stop offset="100%" stopColor="#2B6CB0" />
+        </linearGradient>
+
+        {/* Arc path on the black ring (r=90) */}
         <path
           id="ringArc"
           d="M 10,100 A 90,90 0 0,1 190,100"
           fill="none"
         />
       </defs>
+
+      {/* Outer black ring */}
+      <circle cx="100" cy="100" r="99" fill="#111111" />
+
+      {/* Inner white circle */}
+      <circle cx="100" cy="100" r="82" fill="#FFFFFF" />
+
+      {/* "TOGETHER, WE GO FURTHER" on the ring */}
       <text
         style={{
           fontFamily: '"Arial", sans-serif',
@@ -66,7 +73,7 @@ export const TAMLogo: React.FC<Props> = ({ size = 320 }) => {
         </textPath>
       </text>
 
-      {/* "The" — rainbow */}
+      {/* "The" — smooth rainbow gradient */}
       <text
         x="100"
         y="67"
@@ -74,15 +81,12 @@ export const TAMLogo: React.FC<Props> = ({ size = 320 }) => {
         fontSize="21"
         fontWeight="bold"
         fontFamily='"Arial Black", "Arial", sans-serif'
+        fill="url(#theGrad)"
       >
-        {THE.map((c, i) => (
-          <tspan key={i} fill={c.color}>
-            {c.char}
-          </tspan>
-        ))}
+        The
       </text>
 
-      {/* "Autistic" — rainbow, slightly smaller so all 8 chars fit */}
+      {/* "Autistic" — smooth rainbow gradient */}
       <text
         x="100"
         y="97"
@@ -90,15 +94,12 @@ export const TAMLogo: React.FC<Props> = ({ size = 320 }) => {
         fontSize="20"
         fontWeight="bold"
         fontFamily='"Arial Black", "Arial", sans-serif'
+        fill="url(#autisticGrad)"
       >
-        {AUTISTIC.map((c, i) => (
-          <tspan key={i} fill={c.color}>
-            {c.char}
-          </tspan>
-        ))}
+        Autistic
       </text>
 
-      {/* "Mile" — rainbow */}
+      {/* "Mile" — smooth rainbow gradient */}
       <text
         x="100"
         y="126"
@@ -106,12 +107,9 @@ export const TAMLogo: React.FC<Props> = ({ size = 320 }) => {
         fontSize="22"
         fontWeight="bold"
         fontFamily='"Arial Black", "Arial", sans-serif'
+        fill="url(#mileGrad)"
       >
-        {MILE.map((c, i) => (
-          <tspan key={i} fill={c.color}>
-            {c.char}
-          </tspan>
-        ))}
+        Mile
       </text>
 
       {/* Road icon — converging lines to a vanishing point */}

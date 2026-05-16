@@ -57,7 +57,7 @@ export const SceneTagline: React.FC = () => {
           pointerEvents: "none",
           userSelect: "none",
         }}>
-          PODCAST · PODCAST ·
+          AUTISTIC MILE · AUTISTIC MILE ·
         </div>
 
         {/* Outlined circle dots — top */}
