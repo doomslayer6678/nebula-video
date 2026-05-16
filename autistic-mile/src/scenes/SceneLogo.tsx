@@ -6,13 +6,14 @@ export const SceneLogo: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const enter = spring({ frame: frame - 2, fps, config: { damping: 14, stiffness: 100 } });
+  const enterRaw = spring({ frame: frame - 2, fps, config: { damping: 14, stiffness: 100 } });
+  const enter = Math.min(enterRaw, 1);
 
   const glowW = 580 + Math.sin(frame * 0.10) * 60;
   const glowH = 580 + Math.sin(frame * 0.10) * 60;
   const glowOpacity = 0.09 + Math.sin(frame * 0.09) * 0.04;
 
-  const dotsIn = spring({ frame: frame - 16, fps, config: { damping: 16, stiffness: 70 } });
+  const dotsIn = Math.min(spring({ frame: frame - 16, fps, config: { damping: 16, stiffness: 70 } }), 1);
   const DOT_ORBS = [
     { angle: 0,   dist: 280, size: 10, color: "#5aaee0", phase: 0   },
     { angle: 90,  dist: 260, size: 7,  color: "#f5e6c8", phase: 1.6 },
@@ -21,7 +22,7 @@ export const SceneLogo: React.FC = () => {
   ];
 
   const ringScale = 1 + (frame % 36) / 36 * 0.35;
-  const ringOpacity = (1 - (frame % 36) / 36) * 0.25 * Math.min(enter, 1);
+  const ringOpacity = (1 - (frame % 36) / 36) * 0.25 * enter;
 
   return (
     <div
@@ -31,13 +32,11 @@ export const SceneLogo: React.FC = () => {
         display: "flex", alignItems: "center", justifyContent: "center",
       }}
     >
-      {/* Pulsing radial glow behind logo */}
       <div style={{
         position: "absolute", inset: 0,
         background: `radial-gradient(ellipse ${glowW}px ${glowH}px at 50% 50%, rgba(90,174,224,${glowOpacity}) 0%, transparent 65%)`,
       }} />
 
-      {/* Expanding pulse ring */}
       <div style={{
         position: "absolute",
         width: 420, height: 420,
@@ -48,7 +47,6 @@ export const SceneLogo: React.FC = () => {
         pointerEvents: "none",
       }} />
 
-      {/* Floating orbital dots */}
       {DOT_ORBS.map((orb, i) => {
         const rad = (orb.angle * Math.PI) / 180;
         const floatY = Math.sin(frame * 0.07 + orb.phase) * 12;
@@ -65,9 +63,8 @@ export const SceneLogo: React.FC = () => {
         );
       })}
 
-      {/* Logo — entrance spring only, no continuous scale oscillation */}
       <div style={{
-        opacity: Math.min(enter, 1),
+        opacity: enter,
         transform: `scale(${interpolate(enter, [0, 1], [0.82, 1])})`,
       }}>
         <TAMLogo size={400} />
