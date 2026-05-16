@@ -5,11 +5,11 @@ import { SceneTagline } from "./scenes/SceneTagline";
 import { SceneCredits } from "./scenes/SceneCredits";
 import { SceneLogo } from "./scenes/SceneLogo";
 
-// Scene layout — 225 frames @ 30fps = 7.5s
+// Scene layout — 255 frames @ 30fps = 8.5s
 //   0– 60  SceneTitle    (2s)  THE / AUTISTIC / MILE slams in
-//  60–120  SceneTagline  (2s)  Color split + EDUCATE. ENGAGE. INSPIRE.
-// 120–180  SceneCredits  (2s)  Hosted by / JSA credit
-// 180–225  SceneLogo     (1.5s) Circular logo hold
+//  60–150  SceneTagline  (3s)  Color split + EDUCATE. ENGAGE. INSPIRE.
+// 150–210  SceneCredits  (2s)  Hosted by / JSA credit
+// 210–255  SceneLogo     (1.5s) Circular logo hold
 
 export const AutisticMileIntro: React.FC = () => {
   return (
@@ -22,19 +22,18 @@ export const AutisticMileIntro: React.FC = () => {
         position: "relative",
       }}
     >
-      {/* Audio — starts at 22s into the track (22 × 30 = 660 frames offset) */}
       <Audio src={staticFile("music.mp3")} startFrom={660} volume={1} />
 
       <Sequence from={0} durationInFrames={60}>
         <SceneTitle />
       </Sequence>
-      <Sequence from={60} durationInFrames={60}>
+      <Sequence from={60} durationInFrames={90}>
         <SceneTagline />
       </Sequence>
-      <Sequence from={120} durationInFrames={60}>
+      <Sequence from={150} durationInFrames={60}>
         <SceneCredits />
       </Sequence>
-      <Sequence from={180} durationInFrames={45}>
+      <Sequence from={210} durationInFrames={45}>
         <SceneLogo />
       </Sequence>
     </div>

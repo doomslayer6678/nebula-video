@@ -31,7 +31,6 @@ export const SceneTagline: React.FC = () => {
 
   const contentFloat = Math.sin(frame * 0.06) * 5;
   const ghostX = -frame * 2.5;
-  const scanX = interpolate(frame % 44, [0, 44], [-20, 1100]);
   const divGlowY = (frame * 16) % 1160 - 40;
 
   return (
@@ -48,7 +47,6 @@ export const SceneTagline: React.FC = () => {
       </div>
       <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: `${100 - SPLIT}%`, background: "#1a2744", transform: `translateX(${interpolate(rightSlide, [0, 1], [100, 0])}%)`, overflow: "hidden" }}>
         <DotGrid id="tl-right" color="#5aaee0" alpha={0.09} />
-        <div style={{ position: "absolute", left: scanX, top: 0, bottom: 0, width: 2, background: "linear-gradient(180deg, transparent, rgba(90,174,224,0.15), transparent)", pointerEvents: "none" }} />
         <div style={{ position: "absolute", left: "8%", right: "7%", top: "12%", bottom: "12%", border: `1.5px solid rgba(90,174,224,${frameIn * 0.28})`, opacity: frameIn }} />
         <div style={{ position: "absolute", right: 110, top: "50%", transform: `translateY(calc(-50% + ${contentFloat}px))`, textAlign: "right" }}>
           <div style={{ fontSize: 13, fontWeight: 700, color: "#5aaee0", letterSpacing: "0.30em", fontFamily: '"Inter", "Segoe UI", sans-serif', textTransform: "uppercase", marginBottom: 18, opacity: label, transform: `translateX(${interpolate(label, [0, 1], [40, 0])}px)` }}>THE AUTISTIC MILE</div>

@@ -31,8 +31,6 @@ export const SceneTitle: React.FC = () => {
   const bar1W = interpolate(autisticP, [0.6, 1], [0, 600], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const bar2W = interpolate(mileP,     [0.6, 1], [0, 600], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const mileUnderlineW = interpolate(mileP, [0, 1], [0, 460]);
-
-  const scanX = interpolate(frame % 48, [0, 48], [-80, 2080]);
   const ghostScale = 1 + frame * 0.0015;
 
   return (
@@ -42,8 +40,7 @@ export const SceneTitle: React.FC = () => {
         background: `radial-gradient(ellipse ${1100 + Math.sin(frame * 0.08) * 80}px ${620 + Math.sin(frame * 0.08) * 40}px at 50% 50%, rgba(90,174,224,0.10) 0%, transparent 70%)`,
       }} />
       <div style={{
-        position: "absolute",
-        top: "50%", left: "50%",
+        position: "absolute", top: "50%", left: "50%",
         transform: `translate(-50%, -50%) scale(${ghostScale})`,
         fontFamily: '"Bebas Neue", Impact, "Arial Narrow", sans-serif',
         fontSize: 460, fontWeight: 900,
@@ -51,12 +48,6 @@ export const SceneTitle: React.FC = () => {
         whiteSpace: "nowrap", letterSpacing: "0.04em",
         lineHeight: 1, pointerEvents: "none", userSelect: "none",
       }}>MILE</div>
-      <div style={{
-        position: "absolute",
-        left: scanX, top: 0, bottom: 0, width: 3,
-        background: "linear-gradient(180deg, transparent 0%, rgba(90,174,224,0.18) 30%, rgba(255,255,255,0.12) 50%, rgba(90,174,224,0.18) 70%, transparent 100%)",
-        pointerEvents: "none",
-      }} />
       <div style={{
         position: "absolute", inset: 0,
         display: "flex", flexDirection: "column",
