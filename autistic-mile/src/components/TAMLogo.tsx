@@ -11,17 +11,17 @@ export const TAMLogo: React.FC<Props> = ({ size = 320 }) => {
       height={size}
       viewBox="0 0 200 200"
       style={{ display: "block", overflow: "visible" }}
+      textRendering="geometricPrecision"
+      shapeRendering="geometricPrecision"
     >
       <defs>
-        {/* Left-to-right rainbow gradient for "The" */}
-        <linearGradient id="theGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <linearGradient id="tam-theGrad" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%"   stopColor="#E53E3E" />
           <stop offset="50%"  stopColor="#DD6B20" />
           <stop offset="100%" stopColor="#D69E2E" />
         </linearGradient>
 
-        {/* Left-to-right rainbow gradient for "Autistic" */}
-        <linearGradient id="autisticGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <linearGradient id="tam-autisticGrad" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%"   stopColor="#2F855A" />
           <stop offset="14%"  stopColor="#2B6CB0" />
           <stop offset="29%"  stopColor="#6B46C1" />
@@ -32,29 +32,23 @@ export const TAMLogo: React.FC<Props> = ({ size = 320 }) => {
           <stop offset="100%" stopColor="#2B6CB0" />
         </linearGradient>
 
-        {/* Left-to-right rainbow gradient for "Mile" */}
-        <linearGradient id="mileGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <linearGradient id="tam-mileGrad" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%"   stopColor="#6B46C1" />
           <stop offset="33%"  stopColor="#E53E3E" />
           <stop offset="67%"  stopColor="#2F855A" />
           <stop offset="100%" stopColor="#2B6CB0" />
         </linearGradient>
 
-        {/* Arc path on the black ring (r=90) */}
         <path
-          id="ringArc"
+          id="tam-ringArc"
           d="M 10,100 A 90,90 0 0,1 190,100"
           fill="none"
         />
       </defs>
 
-      {/* Outer black ring */}
       <circle cx="100" cy="100" r="99" fill="#111111" />
-
-      {/* Inner white circle */}
       <circle cx="100" cy="100" r="82" fill="#FFFFFF" />
 
-      {/* "TOGETHER, WE GO FURTHER" on the ring */}
       <text
         style={{
           fontFamily: '"Arial", sans-serif',
@@ -62,9 +56,10 @@ export const TAMLogo: React.FC<Props> = ({ size = 320 }) => {
           fontWeight: 700,
           letterSpacing: 1.5,
         }}
+        textRendering="geometricPrecision"
       >
         <textPath
-          href="#ringArc"
+          href="#tam-ringArc"
           startOffset="50%"
           textAnchor="middle"
           fill="#FFFFFF"
@@ -73,46 +68,42 @@ export const TAMLogo: React.FC<Props> = ({ size = 320 }) => {
         </textPath>
       </text>
 
-      {/* "The" — smooth rainbow gradient */}
       <text
-        x="100"
-        y="67"
+        x="100" y="67"
         textAnchor="middle"
         fontSize="21"
         fontWeight="bold"
         fontFamily='"Arial Black", "Arial", sans-serif'
-        fill="url(#theGrad)"
+        fill="url(#tam-theGrad)"
+        textRendering="geometricPrecision"
       >
         The
       </text>
 
-      {/* "Autistic" — smooth rainbow gradient */}
       <text
-        x="100"
-        y="97"
+        x="100" y="97"
         textAnchor="middle"
         fontSize="20"
         fontWeight="bold"
         fontFamily='"Arial Black", "Arial", sans-serif'
-        fill="url(#autisticGrad)"
+        fill="url(#tam-autisticGrad)"
+        textRendering="geometricPrecision"
       >
         Autistic
       </text>
 
-      {/* "Mile" — smooth rainbow gradient */}
       <text
-        x="100"
-        y="126"
+        x="100" y="126"
         textAnchor="middle"
         fontSize="22"
         fontWeight="bold"
         fontFamily='"Arial Black", "Arial", sans-serif'
-        fill="url(#mileGrad)"
+        fill="url(#tam-mileGrad)"
+        textRendering="geometricPrecision"
       >
         Mile
       </text>
 
-      {/* Road icon — converging lines to a vanishing point */}
       <g>
         <line x1="74"  y1="162" x2="97"  y2="142" stroke="#2D3748" strokeWidth="2.5" strokeLinecap="round" />
         <line x1="126" y1="162" x2="103" y2="142" stroke="#2D3748" strokeWidth="2.5" strokeLinecap="round" />
