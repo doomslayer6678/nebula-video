@@ -17,6 +17,8 @@ export const SceneOpening: React.FC = () => {
   const dividerW = interpolate(statIn, [0, 1], [0, 560]);
   const gridOpacity = interpolate(frame, [0, 20], [0, 0.35], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
+  const pct = Math.round(interpolate(pctCount, [0, 1], [0, 40]));
+
   return (
     <div style={{ position: "absolute", inset: 0, background: "#0a0e1a", overflow: "hidden" }}>
       <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: gridOpacity }}>
@@ -30,7 +32,7 @@ export const SceneOpening: React.FC = () => {
 
       <div style={{
         position: "absolute", inset: 0,
-        background: `radial-gradient(ellipse 900px 600px at 50% 48%, rgba(0,255,136,0.05) 0%, transparent 70%)`,
+        background: "radial-gradient(ellipse 900px 600px at 50% 48%, rgba(0,255,136,0.05) 0%, transparent 70%)",
       }} />
 
       <div style={{
@@ -43,10 +45,10 @@ export const SceneOpening: React.FC = () => {
           fontSize: 108, fontWeight: 900,
           color: "#ffffff", letterSpacing: "-0.02em", lineHeight: 1,
           opacity: line1,
-          transform: `translateY(${interpolate(line1, [0, 1], [-80, 0])}px)`,
+          transform: "translateY(" + interpolate(line1, [0, 1], [-80, 0]) + "px)",
           textAlign: "center",
         }}>
-          YOU’RE DIVERSIFIED.
+          YOU&apos;RE DIVERSIFIED.
         </div>
 
         <div style={{
@@ -54,7 +56,7 @@ export const SceneOpening: React.FC = () => {
           fontSize: 108, fontWeight: 900,
           color: NEON, letterSpacing: "-0.02em", lineHeight: 1.1,
           opacity: line2,
-          transform: `translateY(${interpolate(line2, [0, 1], [-80, 0])}px)`,
+          transform: "translateY(" + interpolate(line2, [0, 1], [-80, 0]) + "px)",
           textAlign: "center", marginBottom: 56,
         }}>
           OR SO YOU THINK.
@@ -62,7 +64,7 @@ export const SceneOpening: React.FC = () => {
 
         <div style={{
           width: dividerW, height: 2,
-          background: `linear-gradient(90deg, transparent, ${TEAL}, transparent)`,
+          background: "linear-gradient(90deg, transparent, " + TEAL + ", transparent)",
           marginBottom: 32,
         }} />
 
@@ -72,15 +74,15 @@ export const SceneOpening: React.FC = () => {
           color: "rgba(255,255,255,0.65)", letterSpacing: "0.01em",
           opacity: statIn, textAlign: "center",
         }}>
-          The top 10 stocks make up nearly{” ”}
+          {"The top 10 stocks make up nearly "}
           <span style={{ color: NEON, fontWeight: 800, fontSize: 36 }}>
-            {Math.round(interpolate(pctCount, [0, 1], [0, 40]))}%
+            {pct}%
           </span>
-          {” ”}of the S&amp;P 500.
+          {" of the S&P 500."}
         </div>
       </div>
 
-      {["tl", "tr", "bl", "br"].map((corner) => {
+      {(["tl", "tr", "bl", "br"] as const).map((corner) => {
         const isRight = corner.includes("r");
         const isBottom = corner.includes("b");
         return (
