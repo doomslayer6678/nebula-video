@@ -14,35 +14,34 @@ const HOLDINGS = [
 ];
 
 const ACTIVITY = [
-  { who: "Pelosi",      action: "Bought",   ticker: "NVDA", amount: "$500K+",    when: "2d ago", color: NEON },
-  { who: "Bridgewater", action: "Added",    ticker: "SPY",  amount: "2.3M shs",  when: "1w ago", color: TEAL },
-  { who: "Berkshire",   action: "Increased",ticker: "OXY",  amount: "$1.2B",     when: "1w ago", color: BLUE },
-  { who: "Congress",    action: "Sold",     ticker: "MSFT", amount: "$250K+",    when: "3d ago", color: "#ff4455" },
-  { who: "Citadel",     action: "Opened",   ticker: "AMZN", amount: "800K shs",  when: "5d ago", color: NEON },
+  { who: "Pelosi",      action: "Bought",    ticker: "NVDA", amount: "$500K+",   when: "2d ago", color: NEON },
+  { who: "Bridgewater", action: "Added",     ticker: "SPY",  amount: "2.3M shs", when: "1w ago", color: TEAL },
+  { who: "Berkshire",   action: "Increased", ticker: "OXY",  amount: "$1.2B",    when: "1w ago", color: BLUE },
+  { who: "Congress",    action: "Sold",      ticker: "MSFT", amount: "$250K+",   when: "3d ago", color: "#ff4455" },
+  { who: "Citadel",     action: "Opened",    ticker: "AMZN", amount: "800K shs", when: "5d ago", color: NEON },
 ];
 
 export const SceneComparison: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const dividerIn = Math.min(spring({ frame: frame - 0, fps, config: { damping: 18, stiffness: 180 } }), 1);
-  const leftIn = Math.min(spring({ frame: frame - 6, fps, config: { damping: 18, stiffness: 130 } }), 1);
-  const rightIn = Math.min(spring({ frame: frame - 12, fps, config: { damping: 18, stiffness: 130 } }), 1);
-  const textIn = interpolate(frame, [40, 58], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const divH = interpolate(dividerIn, [0, 1], [0, 1080]);
+  const dividerIn = Math.min(spring({ frame: frame - 0,  fps, config: { damping: 18, stiffness: 180 } }), 1);
+  const leftIn    = Math.min(spring({ frame: frame - 6,  fps, config: { damping: 18, stiffness: 130 } }), 1);
+  const rightIn   = Math.min(spring({ frame: frame - 12, fps, config: { damping: 18, stiffness: 130 } }), 1);
+  const textIn    = interpolate(frame, [40, 58], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const divH      = interpolate(dividerIn, [0, 1], [0, 1080]);
 
   return (
     <div style={{ position: "absolute", inset: 0, background: "#0a0e1a", overflow: "hidden" }}>
       <div style={{
-        position: "absolute",
-        left: 0, top: 0, bottom: 0, width: "50%",
+        position: "absolute", left: 0, top: 0, bottom: 0, width: "50%",
         background: "#0d1420",
         opacity: leftIn,
         transform: `translateX(${interpolate(leftIn, [0, 1], [-80, 0])}px)`,
-        padding: "80px 64px",
+        padding: "64px 64px 180px",
       }}>
         <div style={{ fontFamily: "monospace", fontSize: 11, color: TEAL, letterSpacing: "0.22em", marginBottom: 14 }}>YOUR PORTFOLIO</div>
-        <div style={{ fontFamily: '"Inter", sans-serif', fontSize: 40, fontWeight: 800, color: "#ffffff", marginBottom: 36, letterSpacing: "-0.02em" }}>$84,231</div>
+        <div style={{ fontFamily: '"Inter", sans-serif', fontSize: 40, fontWeight: 800, color: "#ffffff", marginBottom: 32, letterSpacing: "-0.02em" }}>$84,231</div>
         {HOLDINGS.map((h, i) => {
           const rowIn = interpolate(frame, [10 + i * 8, 24 + i * 8], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
           return (
@@ -60,23 +59,21 @@ export const SceneComparison: React.FC = () => {
       </div>
 
       <div style={{
-        position: "absolute",
-        right: 0, top: 0, bottom: 0, width: "50%",
+        position: "absolute", right: 0, top: 0, bottom: 0, width: "50%",
         background: "#0a111e",
         opacity: rightIn,
         transform: `translateX(${interpolate(rightIn, [0, 1], [80, 0])}px)`,
-        padding: "80px 64px",
+        padding: "64px 64px 180px",
       }}>
         <div style={{ fontFamily: "monospace", fontSize: 11, color: BLUE, letterSpacing: "0.22em", marginBottom: 14 }}>HEDGE FUNDS &amp; CONGRESS</div>
-        <div style={{ fontFamily: '"Inter", sans-serif', fontSize: 40, fontWeight: 800, color: "#ffffff", marginBottom: 36, letterSpacing: "-0.02em" }}>Recent Activity</div>
+        <div style={{ fontFamily: '"Inter", sans-serif', fontSize: 40, fontWeight: 800, color: "#ffffff", marginBottom: 32, letterSpacing: "-0.02em" }}>Recent Activity</div>
         {ACTIVITY.map((t, i) => {
           const rowIn = interpolate(frame, [14 + i * 7, 28 + i * 7], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
           return (
             <div key={i} style={{
               marginBottom: 14, padding: "12px 16px",
               background: "rgba(255,255,255,0.025)",
-              borderLeft: `3px solid ${t.color}`,
-              borderRadius: 6,
+              borderLeft: `3px solid ${t.color}`, borderRadius: 6,
               opacity: rowIn,
               transform: `translateX(${interpolate(rowIn, [0, 1], [30, 0])}px)`,
             }}>
@@ -98,18 +95,23 @@ export const SceneComparison: React.FC = () => {
         background: `linear-gradient(180deg, transparent, ${TEAL} 30%, ${TEAL} 70%, transparent)`,
       }} />
 
+      {/* Bottom text — larger, with semi-transparent backing so it reads over both panels */}
       <div style={{
-        position: "absolute", bottom: 52, left: 0, right: 0,
+        position: "absolute", bottom: 0, left: 0, right: 0,
+        padding: "28px 80px 36px",
+        background: "linear-gradient(0deg, rgba(8,12,20,0.95) 0%, rgba(8,12,20,0.85) 70%, transparent 100%)",
         textAlign: "center", opacity: textIn,
+        transform: `translateY(${interpolate(textIn, [0, 1], [20, 0])}px)`,
       }}>
         <div style={{
           fontFamily: '"Inter", "Helvetica Neue", sans-serif',
-          fontSize: 21, fontWeight: 400,
-          color: "rgba(255,255,255,0.55)", letterSpacing: "0.01em",
+          fontSize: 30, fontWeight: 500,
+          color: "rgba(255,255,255,0.88)", letterSpacing: "0.01em",
+          lineHeight: 1.45,
         }}>
           See how your portfolio stacks up against what{" "}
-          <span style={{ color: NEON, fontWeight: 600 }}>hedge funds</span>{" "}and{" "}
-          <span style={{ color: BLUE, fontWeight: 600 }}>Congress</span>{" "}are actually trading.
+          <span style={{ color: NEON, fontWeight: 700 }}>hedge funds</span>{" "}and{" "}
+          <span style={{ color: BLUE, fontWeight: 700 }}>Congress</span>{" "}are actually trading.
         </div>
       </div>
     </div>

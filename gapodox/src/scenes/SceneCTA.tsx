@@ -8,21 +8,18 @@ export const SceneCTA: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const logoIn = Math.min(spring({ frame: frame - 0, fps, config: { damping: 16, stiffness: 120 } }), 1);
+  const logoIn = Math.min(spring({ frame: frame - 0,  fps, config: { damping: 16, stiffness: 120 } }), 1);
   const tag1In = Math.min(spring({ frame: frame - 16, fps, config: { damping: 18, stiffness: 100 } }), 1);
-  const divIn = interpolate(frame, [26, 44], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const ctaIn = Math.min(spring({ frame: frame - 40, fps, config: { damping: 14, stiffness: 90 } }), 1);
+  const divIn  = interpolate(frame, [26, 44], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const ctaIn  = Math.min(spring({ frame: frame - 40, fps, config: { damping: 14, stiffness: 90 } }), 1);
 
   const glowSize = 640 + Math.sin(frame * 0.07) * 70;
-  const glowOp = 0.07 + Math.sin(frame * 0.05) * 0.025;
+  const glowOp   = 0.07 + Math.sin(frame * 0.05) * 0.025;
 
   const DOTS = [
-    { x: 210, y: 190, phase: 0 },
-    { x: 1710, y: 175, phase: 1.2 },
-    { x: 170, y: 880, phase: 0.7 },
-    { x: 1750, y: 895, phase: 1.9 },
-    { x: 960, y: 100, phase: 0.4 },
-    { x: 960, y: 970, phase: 1.5 },
+    { x: 210, y: 190, phase: 0 }, { x: 1710, y: 175, phase: 1.2 },
+    { x: 170, y: 880, phase: 0.7 }, { x: 1750, y: 895, phase: 1.9 },
+    { x: 960, y: 100, phase: 0.4 }, { x: 960,  y: 970, phase: 1.5 },
   ];
 
   return (
@@ -34,15 +31,13 @@ export const SceneCTA: React.FC = () => {
 
       {DOTS.map((d, i) => (
         <div key={i} style={{
-          position: "absolute",
-          left: d.x, top: d.y + Math.sin(frame * 0.06 + d.phase) * 8,
-          width: 6, height: 6,
-          borderRadius: "50%", background: TEAL,
-          opacity: ctaIn * 0.5,
+          position: "absolute", left: d.x,
+          top: d.y + Math.sin(frame * 0.06 + d.phase) * 8,
+          width: 6, height: 6, borderRadius: "50%",
+          background: TEAL, opacity: ctaIn * 0.5,
         }} />
       ))}
 
-      {/* Corner brackets */}
       <div style={{ position: "absolute", top: 56, left: 56, opacity: logoIn * 0.5 }}>
         <div style={{ width: 64, height: 2, background: TEAL }} />
         <div style={{ width: 2, height: 64, background: TEAL }} />
@@ -65,15 +60,17 @@ export const SceneCTA: React.FC = () => {
         display: "flex", flexDirection: "column",
         alignItems: "center", justifyContent: "center",
       }}>
-        {/* Logo — uses Img from Remotion for proper asset handling */}
         <div style={{
           opacity: logoIn,
           transform: `scale(${interpolate(logoIn, [0, 1], [0.72, 1])})`,
-          marginBottom: 44,
-          height: 80,
+          marginBottom: 44, height: 80,
           display: "flex", alignItems: "center",
         }}>
-          <Img src={staticFile("gapodox-logo.png")} alt="Gapodox" style={{ height: 80 }} />
+          {/* mix-blend-mode screen removes the dark PNG background on the dark video bg */}
+          <Img
+            src={staticFile("gapodox-logo.png")}
+            style={{ height: 80, mixBlendMode: "screen" as const }}
+          />
         </div>
 
         <div style={{
@@ -86,8 +83,7 @@ export const SceneCTA: React.FC = () => {
         </div>
 
         <div style={{
-          width: interpolate(divIn, [0, 1], [0, 280]),
-          height: 1,
+          width: interpolate(divIn, [0, 1], [0, 280]), height: 1,
           background: `linear-gradient(90deg, transparent, ${TEAL}, transparent)`,
           marginBottom: 32,
         }} />

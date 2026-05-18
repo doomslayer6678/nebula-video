@@ -10,14 +10,12 @@ export const SceneOpening: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const line1 = Math.min(spring({ frame: frame - 0, fps, config: SLAM }), 1);
-  const line2 = Math.min(spring({ frame: frame - 18, fps, config: SLAM }), 1);
-  const statIn = interpolate(frame, [48, 68], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const pctCount = Math.min(spring({ frame: frame - 55, fps, config: { damping: 12, stiffness: 200 } }), 1);
-  const dividerW = interpolate(statIn, [0, 1], [0, 560]);
-  const gridOpacity = interpolate(frame, [0, 20], [0, 0.35], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const line1a = Math.min(spring({ frame: frame - 0,  fps, config: SLAM }), 1);
+  const line1b = Math.min(spring({ frame: frame - 14, fps, config: SLAM }), 1);
+  const line2  = Math.min(spring({ frame: frame - 36, fps, config: { damping: 12, stiffness: 180 } }), 1);
 
-  const pct = Math.round(interpolate(pctCount, [0, 1], [0, 40]));
+  const gridOpacity = interpolate(frame, [0, 20], [0, 0.3], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const glowIn = interpolate(frame, [0, 30], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   return (
     <div style={{ position: "absolute", inset: 0, background: "#0a0e1a", overflow: "hidden" }}>
@@ -32,53 +30,55 @@ export const SceneOpening: React.FC = () => {
 
       <div style={{
         position: "absolute", inset: 0,
-        background: "radial-gradient(ellipse 900px 600px at 50% 48%, rgba(0,255,136,0.05) 0%, transparent 70%)",
+        background: "radial-gradient(ellipse 900px 600px at 50% 50%, rgba(0,255,136,0.06) 0%, transparent 70%)",
+        opacity: glowIn,
       }} />
 
       <div style={{
         position: "absolute", inset: 0,
         display: "flex", flexDirection: "column",
         alignItems: "center", justifyContent: "center",
+        gap: 0,
       }}>
         <div style={{
           fontFamily: '"Inter", "Helvetica Neue", sans-serif',
-          fontSize: 108, fontWeight: 900,
-          color: "#ffffff", letterSpacing: "-0.02em", lineHeight: 1,
-          opacity: line1,
-          transform: "translateY(" + interpolate(line1, [0, 1], [-80, 0]) + "px)",
+          fontSize: 96, fontWeight: 900,
+          color: "#ffffff", letterSpacing: "-0.025em", lineHeight: 1,
+          opacity: line1a,
+          transform: "translateY(" + interpolate(line1a, [0, 1], [-90, 0]) + "px)",
           textAlign: "center",
         }}>
-          YOU&apos;RE DIVERSIFIED.
+          Adding another investing app
         </div>
 
         <div style={{
           fontFamily: '"Inter", "Helvetica Neue", sans-serif',
-          fontSize: 108, fontWeight: 900,
-          color: NEON, letterSpacing: "-0.02em", lineHeight: 1.1,
-          opacity: line2,
-          transform: "translateY(" + interpolate(line2, [0, 1], [-80, 0]) + "px)",
-          textAlign: "center", marginBottom: 56,
+          fontSize: 96, fontWeight: 900,
+          color: "#ffffff", letterSpacing: "-0.025em", lineHeight: 1.1,
+          opacity: line1b,
+          transform: "translateY(" + interpolate(line1b, [0, 1], [-90, 0]) + "px)",
+          textAlign: "center",
+          marginBottom: 48,
         }}>
-          OR SO YOU THINK.
+          won&apos;t make you a better investor.
         </div>
 
         <div style={{
-          width: dividerW, height: 2,
+          width: interpolate(line2, [0, 1], [0, 480]),
+          height: 2,
           background: "linear-gradient(90deg, transparent, " + TEAL + ", transparent)",
-          marginBottom: 32,
+          marginBottom: 36,
         }} />
 
         <div style={{
           fontFamily: '"Inter", "Helvetica Neue", sans-serif',
-          fontSize: 28, fontWeight: 400,
-          color: "rgba(255,255,255,0.65)", letterSpacing: "0.01em",
-          opacity: statIn, textAlign: "center",
+          fontSize: 52, fontWeight: 600,
+          color: NEON, letterSpacing: "-0.01em",
+          opacity: line2,
+          transform: "translateY(" + interpolate(line2, [0, 1], [30, 0]) + "px)",
+          textAlign: "center",
         }}>
-          {"The top 10 stocks make up nearly "}
-          <span style={{ color: NEON, fontWeight: 800, fontSize: 36 }}>
-            {pct}%
-          </span>
-          {" of the S&P 500."}
+          Seeing everything in one place will.
         </div>
       </div>
 
@@ -92,7 +92,7 @@ export const SceneOpening: React.FC = () => {
             bottom: isBottom ? 60 : undefined,
             left: isRight ? undefined : 60,
             right: isRight ? 60 : undefined,
-            opacity: line1 * 0.55,
+            opacity: line1a * 0.5,
           }}>
             <div style={{ width: 72, height: 2, background: TEAL, position: "absolute", [isRight ? "right" : "left"]: 0, top: 0 }} />
             <div style={{ width: 2, height: 72, background: TEAL, position: "absolute", [isRight ? "right" : "left"]: 0, [isBottom ? "bottom" : "top"]: 0 }} />
