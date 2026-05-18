@@ -1,0 +1,24 @@
+{
+  "name": "gapodox-video",
+  "version": "1.0.0",
+  "description": "Gapodox — 30s video ad",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@remotion/cli": "4.0.457",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.457"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.7",
+    "@types/web": "0.0.166",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "dev": "remotion studio",
+    "render": "remotion render GapodoxAd out/gapodox-ad.mp4",
+    "lint": "tsc"
+  },
+  "sideEffects": ["*.css"]
+}
