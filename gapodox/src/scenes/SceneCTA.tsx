@@ -1,5 +1,5 @@
 import React from "react";
-import { useCurrentFrame, useVideoConfig, interpolate, spring, staticFile } from "remotion";
+import { useCurrentFrame, useVideoConfig, interpolate, spring, staticFile, Img } from "remotion";
 
 const NEON = "#00ff88";
 const TEAL = "#3dd9d9";
@@ -17,31 +17,32 @@ export const SceneCTA: React.FC = () => {
   const glowOp = 0.07 + Math.sin(frame * 0.05) * 0.025;
 
   const DOTS = [
-    { x: 210, y: 190, size: 5, phase: 0 },
-    { x: 1710, y: 175, size: 4, phase: 1.2 },
-    { x: 170, y: 880, size: 6, phase: 0.7 },
-    { x: 1750, y: 895, size: 4, phase: 1.9 },
-    { x: 960, y: 100, size: 3, phase: 0.4 },
-    { x: 960, y: 970, size: 3, phase: 1.5 },
+    { x: 210, y: 190, phase: 0 },
+    { x: 1710, y: 175, phase: 1.2 },
+    { x: 170, y: 880, phase: 0.7 },
+    { x: 1750, y: 895, phase: 1.9 },
+    { x: 960, y: 100, phase: 0.4 },
+    { x: 960, y: 970, phase: 1.5 },
   ];
 
   return (
     <div style={{ position: "absolute", inset: 0, background: "#0a0e1a", overflow: "hidden" }}>
       <div style={{
         position: "absolute", inset: 0,
-        background: `radial-gradient(ellipse ${glowSize}px ${glowSize * 0.6}px at 50% 50%, rgba(0,255,136,${glowOp}) 0%, transparent 70%)`,
+        background: `radial-gradient(ellipse ${glowSize}px ${Math.round(glowSize * 0.6)}px at 50% 50%, rgba(0,255,136,${glowOp}) 0%, transparent 70%)`,
       }} />
 
       {DOTS.map((d, i) => (
         <div key={i} style={{
           position: "absolute",
           left: d.x, top: d.y + Math.sin(frame * 0.06 + d.phase) * 8,
-          width: d.size, height: d.size,
+          width: 6, height: 6,
           borderRadius: "50%", background: TEAL,
-          opacity: ctaIn * 0.55,
+          opacity: ctaIn * 0.5,
         }} />
       ))}
 
+      {/* Corner brackets */}
       <div style={{ position: "absolute", top: 56, left: 56, opacity: logoIn * 0.5 }}>
         <div style={{ width: 64, height: 2, background: TEAL }} />
         <div style={{ width: 2, height: 64, background: TEAL }} />
@@ -64,12 +65,15 @@ export const SceneCTA: React.FC = () => {
         display: "flex", flexDirection: "column",
         alignItems: "center", justifyContent: "center",
       }}>
+        {/* Logo — uses Img from Remotion for proper asset handling */}
         <div style={{
           opacity: logoIn,
           transform: `scale(${interpolate(logoIn, [0, 1], [0.72, 1])})`,
           marginBottom: 44,
+          height: 80,
+          display: "flex", alignItems: "center",
         }}>
-          <img src={staticFile("gapodox-logo.png")} alt="Gapodox" style={{ height: 80 }} />
+          <Img src={staticFile("gapodox-logo.png")} alt="Gapodox" style={{ height: 80 }} />
         </div>
 
         <div style={{
