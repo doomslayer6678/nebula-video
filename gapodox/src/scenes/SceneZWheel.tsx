@@ -41,46 +41,39 @@ const TICKERS = [
 
 type IconType = "up" | "down" | "star" | "eye" | "refresh" | "wave";
 
-// Icons placed at midpoint angles between adjacent tickers, at radii between concentric rings.
-// Ring zones: r=83 (between 55-110), r=139 (110-168), r=198 (168-228), r=258 (228-288), r=316 (288-345)
 const ICONS: { a: number; r: number; type: IconType }[] = [
-  // Zone 1 (r=83)
-  { a: 7.5,   r: 83, type: "up"      },
-  { a: 59.5,  r: 83, type: "star"    },
-  { a: 111.5, r: 83, type: "up"      },
-  { a: 163.5, r: 83, type: "down"    },
-  { a: 215.5, r: 83, type: "up"      },
-  { a: 267.5, r: 83, type: "refresh" },
-  { a: 315.5, r: 83, type: "up"      },
-  // Zone 2 (r=139)
-  { a: 33.5,  r: 139, type: "eye"    },
-  { a: 85.5,  r: 139, type: "up"     },
-  { a: 137.5, r: 139, type: "up"     },
-  { a: 187.5, r: 139, type: "wave"   },
-  { a: 241.5, r: 139, type: "up"     },
-  { a: 289.5, r: 139, type: "star"   },
-  { a: 341.5, r: 139, type: "up"     },
-  // Zone 3 (r=198)
-  { a: 20.5,  r: 198, type: "up"     },
-  { a: 72.5,  r: 198, type: "refresh"},
-  { a: 124.5, r: 198, type: "up"     },
-  { a: 176.5, r: 198, type: "star"   },
-  { a: 226.5, r: 198, type: "down"   },
-  { a: 276.5, r: 198, type: "up"     },
-  { a: 328.5, r: 198, type: "eye"    },
-  // Zone 4 (r=258)
-  { a: 46.5,  r: 258, type: "up"     },
-  { a: 98.5,  r: 258, type: "wave"   },
-  { a: 150.5, r: 258, type: "up"     },
-  { a: 200.5, r: 258, type: "eye"    },
-  { a: 254.5, r: 258, type: "up"     },
-  { a: 302.5, r: 258, type: "down"   },
-  { a: 354.5, r: 258, type: "up"     },
-  // Zone 5 (r=316)
-  { a: 7.5,   r: 316, type: "star"   },
-  { a: 111.5, r: 316, type: "up"     },
-  { a: 207,   r: 316, type: "refresh"},
-  { a: 302.5, r: 316, type: "up"     },
+  { a: 7.5,   r: 83,  type: "up"      },
+  { a: 59.5,  r: 83,  type: "star"    },
+  { a: 111.5, r: 83,  type: "up"      },
+  { a: 163.5, r: 83,  type: "down"    },
+  { a: 215.5, r: 83,  type: "up"      },
+  { a: 267.5, r: 83,  type: "refresh" },
+  { a: 315.5, r: 83,  type: "up"      },
+  { a: 33.5,  r: 139, type: "eye"     },
+  { a: 85.5,  r: 139, type: "up"      },
+  { a: 137.5, r: 139, type: "up"      },
+  { a: 187.5, r: 139, type: "wave"    },
+  { a: 241.5, r: 139, type: "up"      },
+  { a: 289.5, r: 139, type: "star"    },
+  { a: 341.5, r: 139, type: "up"      },
+  { a: 20.5,  r: 198, type: "up"      },
+  { a: 72.5,  r: 198, type: "refresh" },
+  { a: 124.5, r: 198, type: "up"      },
+  { a: 176.5, r: 198, type: "star"    },
+  { a: 226.5, r: 198, type: "down"    },
+  { a: 276.5, r: 198, type: "up"      },
+  { a: 328.5, r: 198, type: "eye"     },
+  { a: 46.5,  r: 258, type: "up"      },
+  { a: 98.5,  r: 258, type: "wave"    },
+  { a: 150.5, r: 258, type: "up"      },
+  { a: 200.5, r: 258, type: "eye"     },
+  { a: 254.5, r: 258, type: "up"      },
+  { a: 302.5, r: 258, type: "down"    },
+  { a: 354.5, r: 258, type: "up"      },
+  { a: 7.5,   r: 316, type: "star"    },
+  { a: 111.5, r: 316, type: "up"      },
+  { a: 207,   r: 316, type: "refresh" },
+  { a: 302.5, r: 316, type: "up"      },
 ];
 
 const toRad = (deg: number) => (deg * Math.PI) / 180;
@@ -93,12 +86,7 @@ function renderIcon(type: IconType, frame: number, idx: number): React.ReactNode
     case "down":
       return <path d="M0,5 L4,-3 L-4,-3Z" fill="#ff4455" opacity={pulse} />;
     case "star":
-      return (
-        <path
-          d="M0,-6 L1.4,-2 L5.7,-2 L2.3,1.5 L3.5,5.6 L0,3.2 L-3.5,5.6 L-2.3,1.5 L-5.7,-2 L-1.4,-2Z"
-          fill="#ffd700" opacity={pulse}
-        />
-      );
+      return <path d="M0,-6 L1.4,-2 L5.7,-2 L2.3,1.5 L3.5,5.6 L0,3.2 L-3.5,5.6 L-2.3,1.5 L-5.7,-2 L-1.4,-2Z" fill="#ffd700" opacity={pulse} />;
     case "eye":
       return (
         <g opacity={pulse}>
@@ -131,7 +119,8 @@ export const SceneZWheel: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const cx = 960, cy = 430;
+  const cx = 960;
+  const cy = 540;
   const OUTER_R = 345;
   const RING_RADII = [55, 110, 168, 228, 288, 345];
   const TICKER_R = 395;
@@ -140,7 +129,7 @@ export const SceneZWheel: React.FC = () => {
     Math.min(spring({ frame: frame - i * 5, fps, config: { damping: 22, stiffness: 120 } }), 1)
   );
   const centerIn = Math.min(spring({ frame: frame - 0, fps, config: { damping: 14, stiffness: 220 } }), 1);
-  const linesIn  = interpolate(frame, [6, 30],  [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const linesIn  = interpolate(frame, [6,  30], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const iconsIn  = interpolate(frame, [24, 55], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const tickerSprings = TICKERS.map((_, i) =>
     Math.min(spring({ frame: frame - (32 + i * 3), fps, config: { damping: 18, stiffness: 100 } }), 1)
@@ -155,13 +144,11 @@ export const SceneZWheel: React.FC = () => {
 
   return (
     <div style={{ position: "absolute", inset: 0, background: "#080d18", overflow: "hidden" }}>
-      {/* Radial glow */}
       <div style={{
         position: "absolute", inset: 0,
         background: `radial-gradient(ellipse ${glowSize}px ${glowSize}px at ${cx}px ${cy}px, rgba(0,255,136,${glowPulse}) 0%, transparent 65%)`,
       }} />
 
-      {/* Expanding pulse ring */}
       <div style={{
         position: "absolute",
         width: OUTER_R * 2, height: OUTER_R * 2,
@@ -172,6 +159,26 @@ export const SceneZWheel: React.FC = () => {
         opacity: ringPulseOp,
         pointerEvents: "none",
       }} />
+
+      {/* Text — above the wheel */}
+      <div style={{ position: "absolute", top: 18, left: 0, right: 0, textAlign: "center" }}>
+        <div style={{
+          fontFamily: '"Inter", "Helvetica Neue", sans-serif',
+          fontSize: 54, fontWeight: 900, color: "#ffffff",
+          letterSpacing: "-0.02em", opacity: text1In,
+          transform: `translateY(${interpolate(text1In, [0, 1], [-20, 0])}px)`,
+        }}>
+          Meet the{" "}<span style={{ color: NEON }}>Z Wheel.</span>
+        </div>
+        <div style={{
+          fontFamily: '"Inter", "Helvetica Neue", sans-serif',
+          fontSize: 22, fontWeight: 400, color: "rgba(255,255,255,0.58)",
+          marginTop: 8, opacity: text2In,
+          transform: `translateY(${interpolate(text2In, [0, 1], [-16, 0])}px)`,
+        }}>
+          Spot concentration, overlap, and exposure instantly.
+        </div>
+      </div>
 
       <svg
         width={1920} height={1080}
@@ -197,10 +204,8 @@ export const SceneZWheel: React.FC = () => {
           </radialGradient>
         </defs>
 
-        {/* Dark circle background */}
         <circle cx={cx} cy={cy} r={OUTER_R} fill="#0c1128" />
 
-        {/* Concentric rings */}
         {RING_RADII.map((r, i) => (
           <circle key={i}
             cx={cx} cy={cy}
@@ -212,7 +217,6 @@ export const SceneZWheel: React.FC = () => {
           />
         ))}
 
-        {/* Spokes: one per ticker, radiating from center to outer ring at each ticker's angle */}
         <g clipPath="url(#wheel-clip)" opacity={linesIn}>
           {TICKERS.map((t, i) => {
             const rad = toRad(t.angle);
@@ -230,7 +234,6 @@ export const SceneZWheel: React.FC = () => {
           })}
         </g>
 
-        {/* Icons in ring cells (at midpoint angles between tickers) */}
         <g clipPath="url(#wheel-clip)" opacity={iconsIn}>
           {ICONS.map((ic, i) => {
             const rad = toRad(ic.a);
@@ -244,13 +247,11 @@ export const SceneZWheel: React.FC = () => {
           })}
         </g>
 
-        {/* Center: glow halo + small ring + dot */}
         <circle cx={cx} cy={cy} r={36 * centerIn} fill="url(#center-grad)" filter="url(#center-glow)" />
         <circle cx={cx} cy={cy} r={16 * centerIn} fill="#0a0f1e" stroke={NEON} strokeWidth="1.5" opacity={centerIn} />
         <circle cx={cx} cy={cy} r={6  * centerIn} fill={NEON} opacity={centerIn} />
         <circle cx={cx} cy={cy} r={2.5 * centerIn} fill="#ffffff" opacity={centerIn} />
 
-        {/* Ticker labels outside the outer ring */}
         {TICKERS.map((t, i) => {
           const rad = toRad(t.angle);
           const x = cx + Math.cos(rad) * TICKER_R;
@@ -273,25 +274,6 @@ export const SceneZWheel: React.FC = () => {
           );
         })}
       </svg>
-
-      {/* Bottom text */}
-      <div style={{ position: "absolute", bottom: 52, left: 0, right: 0, textAlign: "center" }}>
-        <div style={{
-          fontFamily: '"Inter", "Helvetica Neue", sans-serif',
-          fontSize: 54, fontWeight: 900, color: "#ffffff",
-          letterSpacing: "-0.02em", opacity: text1In,
-          transform: "translateY(" + interpolate(text1In, [0, 1], [20, 0]) + "px)",
-        }}>
-          Meet the{" "}<span style={{ color: NEON }}>Z Wheel.</span>
-        </div>
-        <div style={{
-          fontFamily: '"Inter", "Helvetica Neue", sans-serif',
-          fontSize: 22, fontWeight: 400, color: "rgba(255,255,255,0.58)",
-          marginTop: 10, opacity: text2In,
-        }}>
-          Spot concentration, overlap, and exposure instantly.
-        </div>
-      </div>
     </div>
   );
 };

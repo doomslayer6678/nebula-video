@@ -38,7 +38,7 @@ export const SceneComparison: React.FC = () => {
         background: "#0d1420",
         opacity: leftIn,
         transform: `translateX(${interpolate(leftIn, [0, 1], [-80, 0])}px)`,
-        padding: "64px 64px 180px",
+        padding: "170px 64px 64px",
       }}>
         <div style={{ fontFamily: "monospace", fontSize: 11, color: TEAL, letterSpacing: "0.22em", marginBottom: 14 }}>YOUR PORTFOLIO</div>
         <div style={{ fontFamily: '"Inter", sans-serif', fontSize: 40, fontWeight: 800, color: "#ffffff", marginBottom: 32, letterSpacing: "-0.02em" }}>$84,231</div>
@@ -48,7 +48,7 @@ export const SceneComparison: React.FC = () => {
             <div key={h.ticker} style={{ marginBottom: 18, opacity: rowIn, transform: `translateX(${interpolate(rowIn, [0, 1], [-30, 0])}px)` }}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
                 <span style={{ fontFamily: "monospace", fontSize: 14, color: h.color, fontWeight: 700 }}>{h.ticker}</span>
-                <span style={{ fontFamily: "monospace", fontSize: 13, color: "rgba(255,255,255,0.6)" }}>{h.value} · {h.pct}%</span>
+                <span style={{ fontFamily: "monospace", fontSize: 13, color: "rgba(255,255,255,0.6)" }}>{h.value} {"·"} {h.pct}%</span>
               </div>
               <div style={{ height: 3, background: "rgba(255,255,255,0.07)", borderRadius: 2 }}>
                 <div style={{ width: `${h.pct}%`, height: "100%", background: h.color, borderRadius: 2 }} />
@@ -63,7 +63,7 @@ export const SceneComparison: React.FC = () => {
         background: "#0a111e",
         opacity: rightIn,
         transform: `translateX(${interpolate(rightIn, [0, 1], [80, 0])}px)`,
-        padding: "64px 64px 180px",
+        padding: "170px 64px 64px",
       }}>
         <div style={{ fontFamily: "monospace", fontSize: 11, color: BLUE, letterSpacing: "0.22em", marginBottom: 14 }}>HEDGE FUNDS &amp; CONGRESS</div>
         <div style={{ fontFamily: '"Inter", sans-serif', fontSize: 40, fontWeight: 800, color: "#ffffff", marginBottom: 32, letterSpacing: "-0.02em" }}>Recent Activity</div>
@@ -82,7 +82,7 @@ export const SceneComparison: React.FC = () => {
                 <span style={{ fontFamily: "monospace", fontSize: 11, color: "rgba(255,255,255,0.3)" }}>{t.when}</span>
               </div>
               <div style={{ fontFamily: "monospace", fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 4 }}>
-                {t.action} {t.ticker} · {t.amount}
+                {t.action} {t.ticker} {"·"} {t.amount}
               </div>
             </div>
           );
@@ -95,13 +95,13 @@ export const SceneComparison: React.FC = () => {
         background: `linear-gradient(180deg, transparent, ${TEAL} 30%, ${TEAL} 70%, transparent)`,
       }} />
 
-      {/* Bottom text — larger, with semi-transparent backing so it reads over both panels */}
+      {/* Header text — top of page */}
       <div style={{
-        position: "absolute", bottom: 0, left: 0, right: 0,
-        padding: "28px 80px 36px",
-        background: "linear-gradient(0deg, rgba(8,12,20,0.95) 0%, rgba(8,12,20,0.85) 70%, transparent 100%)",
+        position: "absolute", top: 0, left: 0, right: 0,
+        padding: "36px 80px 28px",
+        background: "linear-gradient(180deg, rgba(8,12,20,0.95) 0%, rgba(8,12,20,0.88) 70%, transparent 100%)",
         textAlign: "center", opacity: textIn,
-        transform: `translateY(${interpolate(textIn, [0, 1], [20, 0])}px)`,
+        transform: `translateY(${interpolate(textIn, [0, 1], [-20, 0])}px)`,
       }}>
         <div style={{
           fontFamily: '"Inter", "Helvetica Neue", sans-serif',

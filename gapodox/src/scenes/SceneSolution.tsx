@@ -12,7 +12,7 @@ export const SceneSolution: React.FC = () => {
   const dashIn = Math.min(spring({ frame: frame - 10, fps, config: { damping: 20, stiffness: 150 } }), 1);
   const logoIn = Math.min(spring({ frame: frame - 22, fps, config: { damping: 16, stiffness: 120 } }), 1);
   const textIn = interpolate(frame, [30, 50], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const lineW = interpolate(textIn, [0, 1], [0, 520]);
+  const lineW  = interpolate(textIn, [0, 1], [0, 520]);
 
   const PLACEHOLDER_COLORS = ["#4a9eff", "#00ff88", "#ff9900", "#3dd9d9"];
 
@@ -36,6 +36,24 @@ export const SceneSolution: React.FC = () => {
         opacity: dashIn,
       }} />
 
+      {/* Header — above the dashboard graphic */}
+      <div style={{
+        position: "absolute", top: 115, left: "50%",
+        transform: `translateX(-50%)`,
+        textAlign: "center", opacity: textIn,
+      }}>
+        <div style={{ width: lineW, height: 2, background: `linear-gradient(90deg, transparent, ${TEAL}, transparent)`, margin: "0 auto 24px" }} />
+        <div style={{
+          fontFamily: '"Inter", "Helvetica Neue", sans-serif',
+          fontSize: 44, fontWeight: 700, color: "#ffffff",
+          letterSpacing: "-0.01em", whiteSpace: "nowrap",
+          transform: `translateY(${interpolate(textIn, [0, 1], [-16, 0])}px)`,
+        }}>
+          Gapodox brings it all together.
+        </div>
+      </div>
+
+      {/* Dashboard mockup */}
       <div style={{
         position: "absolute", left: "50%", top: "50%",
         width: 960, height: 500,
@@ -66,7 +84,7 @@ export const SceneSolution: React.FC = () => {
           <div style={{ flex: 1 }}>
             <div style={{ color: "rgba(255,255,255,0.35)", fontSize: 12, fontFamily: "monospace", marginBottom: 8 }}>TOTAL VALUE</div>
             <div style={{ color: NEON, fontSize: 44, fontWeight: 700, fontFamily: "monospace" }}>$84,231.40</div>
-            <div style={{ color: NEON, fontSize: 14, fontFamily: "monospace", marginTop: 4 }}>▲ +12.4% this month</div>
+            <div style={{ color: NEON, fontSize: 14, fontFamily: "monospace", marginTop: 4 }}>{"▲"} +12.4% this month</div>
             <svg width="100%" height="110" style={{ marginTop: 20 }}>
               <polyline points="0,100 80,78 160,83 240,58 320,48 400,28 480,18 540,12" stroke={NEON} strokeWidth="2.5" fill="none" />
               <polyline points="0,100 80,78 160,83 240,58 320,48 400,28 480,18 540,12 540,110 0,110" fill={`${NEON}12`} stroke="none" />
@@ -77,7 +95,7 @@ export const SceneSolution: React.FC = () => {
               { ticker: "NVDA", pct: 22, color: NEON },
               { ticker: "AAPL", pct: 18, color: TEAL },
               { ticker: "MSFT", pct: 14, color: "#4a9eff" },
-              { ticker: "BTC", pct: 12, color: "#ff9900" },
+              { ticker: "BTC",  pct: 12, color: "#ff9900" },
               { ticker: "Other", pct: 34, color: "rgba(255,255,255,0.25)" },
             ].map((h, i) => (
               <div key={i} style={{ marginBottom: 12 }}>
@@ -94,23 +112,13 @@ export const SceneSolution: React.FC = () => {
         </div>
       </div>
 
+      {/* Logo — top center */}
       <div style={{
         position: "absolute", top: 52, left: "50%",
         transform: `translateX(-50%) scale(${logoIn})`,
         opacity: logoIn,
       }}>
         <img src={staticFile("gapodox-logo.png")} alt="Gapodox" style={{ height: 44 }} />
-      </div>
-
-      <div style={{ position: "absolute", bottom: 100, left: "50%", transform: "translateX(-50%)", textAlign: "center" }}>
-        <div style={{ width: lineW, height: 2, background: `linear-gradient(90deg, transparent, ${TEAL}, transparent)`, margin: "0 auto 24px" }} />
-        <div style={{
-          fontFamily: '"Inter", "Helvetica Neue", sans-serif',
-          fontSize: 44, fontWeight: 700, color: "#ffffff",
-          opacity: textIn, letterSpacing: "-0.01em", whiteSpace: "nowrap",
-        }}>
-          Gapodox brings it all together.
-        </div>
       </div>
     </div>
   );
