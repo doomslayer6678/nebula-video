@@ -3,7 +3,7 @@ import { useCurrentFrame, useVideoConfig, interpolate, spring, staticFile, Img }
 
 const NEON = "#00ff88";
 const TEAL = "#3dd9d9";
-const BG = "#131929";
+const BG = "#0d1526";
 
 export const SceneCTA: React.FC = () => {
   const frame = useCurrentFrame();
@@ -29,7 +29,6 @@ export const SceneCTA: React.FC = () => {
         position: "absolute", inset: 0,
         background: `radial-gradient(ellipse ${glowSize}px ${Math.round(glowSize * 0.6)}px at 50% 50%, rgba(0,255,136,${glowOp}) 0%, transparent 70%)`,
       }} />
-
       {DOTS.map((d, i) => (
         <div key={i} style={{
           position: "absolute", left: d.x,
@@ -38,7 +37,6 @@ export const SceneCTA: React.FC = () => {
           background: TEAL, opacity: ctaIn * 0.5,
         }} />
       ))}
-
       <div style={{ position: "absolute", top: 56, left: 56, opacity: logoIn * 0.5 }}>
         <div style={{ width: 64, height: 2, background: TEAL }} />
         <div style={{ width: 2, height: 64, background: TEAL }} />
@@ -55,7 +53,6 @@ export const SceneCTA: React.FC = () => {
         <div style={{ width: 2, height: 64, background: TEAL, marginTop: -62, marginLeft: 62 }} />
         <div style={{ width: 64, height: 2, background: TEAL, marginLeft: -62 }} />
       </div>
-
       <div style={{
         position: "absolute", inset: 0,
         display: "flex", flexDirection: "column",
@@ -67,27 +64,19 @@ export const SceneCTA: React.FC = () => {
           marginBottom: 44, height: 80,
           display: "flex", alignItems: "center",
         }}>
-          <Img
-            src={staticFile("gapodox-logo.png")}
-            style={{ height: 80, mixBlendMode: "screen" as const }}
-          />
+          <Img src={staticFile("gapodox-logo.png")} style={{ height: 80, mixBlendMode: "screen" as const }} />
         </div>
-
         <div style={{
           fontFamily: '"Inter", "Helvetica Neue", sans-serif',
           fontSize: 30, fontWeight: 400,
           color: "rgba(255,255,255,0.72)", letterSpacing: "0.01em",
           opacity: tag1In, marginBottom: 28,
-        }}>
-          Portfolio clarity for modern investors.
-        </div>
-
+        }}>Portfolio clarity for modern investors.</div>
         <div style={{
           width: interpolate(divIn, [0, 1], [0, 280]), height: 1,
           background: `linear-gradient(90deg, transparent, ${TEAL}, transparent)`,
           marginBottom: 32,
         }} />
-
         <div style={{
           fontFamily: '"Inter", "Helvetica Neue", sans-serif',
           fontSize: 26, fontWeight: 700, color: NEON,
@@ -96,9 +85,7 @@ export const SceneCTA: React.FC = () => {
           border: `1px solid ${NEON}44`,
           padding: "16px 52px", borderRadius: 8,
           background: `${NEON}0c`,
-        }}>
-          TRY FREE AT GAPODOX.COM
-        </div>
+        }}>TRY FREE AT GAPODOX.COM</div>
       </div>
     </div>
   );
