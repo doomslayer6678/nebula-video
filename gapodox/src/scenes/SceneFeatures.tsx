@@ -2,7 +2,7 @@ import React from "react";
 import { useCurrentFrame, interpolate, Img, staticFile } from "remotion";
 
 const TEAL = "#3dd9d9";
-const BG = "#131929";
+const BG = "#0d1526";
 
 export const SceneFeatures: React.FC = () => {
   const frame = useCurrentFrame();
@@ -30,7 +30,7 @@ export const SceneFeatures: React.FC = () => {
         opacity: imgIn,
       }}>
         <Img
-          src={staticFile("One_dashboard_see_everything_2.PNG")}
+          src={staticFile("one-dashboard-see-everything2.png")}
           style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", display: "block" }}
         />
       </div>

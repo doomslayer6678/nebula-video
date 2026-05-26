@@ -3,7 +3,7 @@ import { useCurrentFrame, useVideoConfig, interpolate, spring, staticFile, Img }
 
 const NEON = "#00ff88";
 const TEAL = "#3dd9d9";
-const BG = "#131929";
+const BG = "#0d1526";
 
 export const SceneSolution: React.FC = () => {
   const frame = useCurrentFrame();
@@ -55,7 +55,7 @@ export const SceneSolution: React.FC = () => {
         transform: `translateX(${interpolate(dashIn, [0, 1], [300, 0])}px)`,
       }}>
         <Img
-          src={staticFile("gapodox_brings_it_all_together_2.png")}
+          src={staticFile("gapodox-brings-it-all-together2.png")}
           style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", display: "block" }}
         />
       </div>
