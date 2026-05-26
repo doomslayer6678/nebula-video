@@ -2,6 +2,7 @@ import React from "react";
 import { useCurrentFrame, interpolate, Img, staticFile } from "remotion";
 
 const NEON = "#00ff88";
+const BG = "#131929";
 
 export const SceneZWheel: React.FC = () => {
   const frame = useCurrentFrame();
@@ -10,10 +11,10 @@ export const SceneZWheel: React.FC = () => {
   const text2In = interpolate(frame, [24, 42], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const imgIn   = interpolate(frame, [4,  28], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
-  const glowPulse = 0.08 + Math.sin(frame * 0.07) * 0.03;
+  const glowPulse = 0.06 + Math.sin(frame * 0.07) * 0.02;
 
   return (
-    <div style={{ position: "absolute", inset: 0, background: "#080d18", overflow: "hidden" }}>
+    <div style={{ position: "absolute", inset: 0, background: BG, overflow: "hidden" }}>
       <div style={{
         position: "absolute", inset: 0,
         background: `radial-gradient(ellipse 800px 800px at 50% 50%, rgba(0,255,136,${glowPulse}) 0%, transparent 60%)`,

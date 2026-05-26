@@ -4,6 +4,7 @@ import { useCurrentFrame, useVideoConfig, interpolate, spring, Img, staticFile }
 const NEON = "#00ff88";
 const TEAL = "#3dd9d9";
 const BLUE = "#4a9eff";
+const BG = "#131929";
 
 export const SceneComparison: React.FC = () => {
   const frame = useCurrentFrame();
@@ -14,7 +15,7 @@ export const SceneComparison: React.FC = () => {
   const textIn  = interpolate(frame, [40, 58], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   return (
-    <div style={{ position: "absolute", inset: 0, background: "#0a0e1a", overflow: "hidden" }}>
+    <div style={{ position: "absolute", inset: 0, background: BG, overflow: "hidden" }}>
       {/* Left panel — Congress/politicians screenshot */}
       <div style={{
         position: "absolute", left: 0, top: 0, bottom: 0, width: "50%",
@@ -55,7 +56,7 @@ export const SceneComparison: React.FC = () => {
       <div style={{
         position: "absolute", top: 0, left: 0, right: 0,
         padding: "36px 80px 28px",
-        background: "linear-gradient(180deg, rgba(8,12,20,0.95) 0%, rgba(8,12,20,0.88) 70%, transparent 100%)",
+        background: `linear-gradient(180deg, ${BG} 0%, rgba(19,25,41,0.9) 70%, transparent 100%)`,
         textAlign: "center", opacity: textIn,
         transform: `translateY(${interpolate(textIn, [0, 1], [-20, 0])}px)`,
       }}>

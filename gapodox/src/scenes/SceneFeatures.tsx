@@ -2,6 +2,7 @@ import React from "react";
 import { useCurrentFrame, interpolate, Img, staticFile } from "remotion";
 
 const TEAL = "#3dd9d9";
+const BG = "#131929";
 
 export const SceneFeatures: React.FC = () => {
   const frame = useCurrentFrame();
@@ -10,12 +11,7 @@ export const SceneFeatures: React.FC = () => {
   const imgIn  = interpolate(frame, [8, 30], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   return (
-    <div style={{ position: "absolute", inset: 0, background: "#0a0e1a", overflow: "hidden" }}>
-      <div style={{
-        position: "absolute", inset: 0,
-        background: "radial-gradient(ellipse 1100px 700px at 50% 50%, rgba(74,158,255,0.05) 0%, transparent 70%)",
-      }} />
-
+    <div style={{ position: "absolute", inset: 0, background: BG, overflow: "hidden" }}>
       {/* Label */}
       <div style={{
         position: "absolute", top: 48, left: 180, right: 180,
@@ -34,7 +30,7 @@ export const SceneFeatures: React.FC = () => {
         opacity: imgIn,
       }}>
         <Img
-          src={staticFile("One_dashboard_see_everything.PNG")}
+          src={staticFile("One_dashboard_see_everything_2.PNG")}
           style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", display: "block" }}
         />
       </div>

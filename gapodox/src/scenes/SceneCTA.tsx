@@ -3,6 +3,7 @@ import { useCurrentFrame, useVideoConfig, interpolate, spring, staticFile, Img }
 
 const NEON = "#00ff88";
 const TEAL = "#3dd9d9";
+const BG = "#131929";
 
 export const SceneCTA: React.FC = () => {
   const frame = useCurrentFrame();
@@ -23,7 +24,7 @@ export const SceneCTA: React.FC = () => {
   ];
 
   return (
-    <div style={{ position: "absolute", inset: 0, background: "#0a0e1a", overflow: "hidden" }}>
+    <div style={{ position: "absolute", inset: 0, background: BG, overflow: "hidden" }}>
       <div style={{
         position: "absolute", inset: 0,
         background: `radial-gradient(ellipse ${glowSize}px ${Math.round(glowSize * 0.6)}px at 50% 50%, rgba(0,255,136,${glowOp}) 0%, transparent 70%)`,
@@ -66,7 +67,6 @@ export const SceneCTA: React.FC = () => {
           marginBottom: 44, height: 80,
           display: "flex", alignItems: "center",
         }}>
-          {/* mix-blend-mode screen removes the dark PNG background on the dark video bg */}
           <Img
             src={staticFile("gapodox-logo.png")}
             style={{ height: 80, mixBlendMode: "screen" as const }}

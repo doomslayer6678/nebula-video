@@ -5,6 +5,7 @@ const NEON = "#00ff88";
 const TEAL = "#3dd9d9";
 const BLUE = "#4a9eff";
 const SLAM = { damping: 9, stiffness: 320, mass: 0.45 };
+const BG = "#131929";
 
 export const SceneOpening: React.FC = () => {
   const frame = useCurrentFrame();
@@ -18,7 +19,7 @@ export const SceneOpening: React.FC = () => {
   const glowIn = interpolate(frame, [0, 30], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   return (
-    <div style={{ position: "absolute", inset: 0, background: "#0a0e1a", overflow: "hidden" }}>
+    <div style={{ position: "absolute", inset: 0, background: BG, overflow: "hidden" }}>
       <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: gridOpacity }}>
         <defs>
           <pattern id="gp-grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
