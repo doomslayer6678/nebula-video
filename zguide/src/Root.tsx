@@ -7,7 +7,7 @@ export const RemotionRoot: React.FC = () => {
     <Composition
       id="ZGuideAd"
       component={ZGuideAd}
-      durationInFrames={900}
+      durationInFrames={990}
       fps={30}
       width={1920}
       height={1080}

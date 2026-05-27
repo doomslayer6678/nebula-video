@@ -1,191 +1,149 @@
 import React from "react";
-import { useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
+import {
+  useCurrentFrame,
+  useVideoConfig,
+  spring,
+  interpolate,
+  staticFile,
+  OffthreadVideo,
+  Img,
+} from "remotion";
 
 const BG = "#0F1B3D";
 const BLUE = "#1847F5";
 const LIGHT_BLUE = "#4D8EF7";
 const WHITE = "#FFFFFF";
 
-const PhoneMockup: React.FC<{ slideUp: number; profileIn: number }> = ({ slideUp, profileIn }) => {
-  return (
+// This scene plays video1.mov for the first ~3s inside a phone, then
+// cross-dissolves to image1.png (the Z Guide profile) to show the result
+// of scanning the QR code. Text appears alongside.
+const PhoneScanToProfile: React.FC<{
+  phoneIn: number;
+  videoOpacity: number;
+  profileOpacity: number;
+}> = ({ phoneIn, videoOpacity, profileOpacity }) => (
+  <div
+    style={{
+      position: "relative",
+      width: 360,
+      height: 780,
+      background: "#000",
+      borderRadius: 48,
+      border: "2px solid rgba(255,255,255,0.15)",
+      boxShadow:
+        "0 0 0 1px rgba(0,0,0,0.7), 0 48px 120px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08)",
+      overflow: "hidden",
+      flexShrink: 0,
+      opacity: phoneIn,
+      transform: `translateY(${interpolate(phoneIn, [0, 1], [40, 0])}px)`,
+    }}
+  >
+    {/* Dynamic Island */}
     <div
       style={{
-        position: "relative",
-        width: 340,
-        height: 720,
-        background: "#0a0f1e",
-        borderRadius: 44,
-        border: "2px solid rgba(255,255,255,0.15)",
-        boxShadow:
-          "0 0 0 1px rgba(0,0,0,0.7), 0 40px 100px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08)",
-        overflow: "hidden",
-        flexShrink: 0,
+        position: "absolute",
+        top: 12,
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: 96,
+        height: 24,
+        background: "#000",
+        borderRadius: 12,
+        zIndex: 10,
+      }}
+    />
+
+    {/* Layer 1: video1.mov — fades out during cross-dissolve */}
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        opacity: videoOpacity,
       }}
     >
-      <div
+      <OffthreadVideo
+        src={staticFile("video1.mov")}
         style={{
-          position: "absolute",
-          top: 12,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: 88,
-          height: 22,
-          background: "#000",
-          borderRadius: 11,
-          zIndex: 10,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition: "top",
+          display: "block",
         }}
+        muted
       />
+    </div>
 
-      {/* Scanning state */}
-      <div
+    {/* Layer 2: image1.png profile — fades in during cross-dissolve */}
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        opacity: profileOpacity,
+      }}
+    >
+      <Img
+        src={staticFile("image1.png")}
         style={{
-          position: "absolute",
-          inset: 0,
-          background: "#050d1a",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          opacity: interpolate(profileIn, [0, 0.3], [1, 0]),
-        }}
-      >
-        <div style={{ position: "relative", width: 200, height: 200 }}>
-          {[
-            { top: 0, left: 0, borderTop: `3px solid ${LIGHT_BLUE}`, borderLeft: `3px solid ${LIGHT_BLUE}` },
-            { top: 0, right: 0, borderTop: `3px solid ${LIGHT_BLUE}`, borderRight: `3px solid ${LIGHT_BLUE}` },
-            { bottom: 0, left: 0, borderBottom: `3px solid ${LIGHT_BLUE}`, borderLeft: `3px solid ${LIGHT_BLUE}` },
-            { bottom: 0, right: 0, borderBottom: `3px solid ${LIGHT_BLUE}`, borderRight: `3px solid ${LIGHT_BLUE}` },
-          ].map((s, i) => (
-            <div
-              key={i}
-              style={{
-                position: "absolute",
-                width: 30,
-                height: 30,
-                ...s,
-              }}
-            />
-          ))}
-          <div
-            style={{
-              position: "absolute",
-              left: 8,
-              right: 8,
-              height: 2,
-              background: `linear-gradient(90deg, transparent, ${LIGHT_BLUE}, transparent)`,
-              top: `${30 + (slideUp * 40)}%`,
-              opacity: 0.8,
-            }}
-          />
-        </div>
-      </div>
-
-      {/* Profile pull-up */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "linear-gradient(160deg, #0F1B3D 0%, #0a0f1e 100%)",
-          opacity: profileIn,
-          transform: `translateY(${interpolate(profileIn, [0, 1], [60, 0])}px)`,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          paddingTop: 80,
-        }}
-      >
-        <div
-          style={{
-            width: 80,
-            height: 80,
-            borderRadius: "50%",
-            background: `linear-gradient(135deg, ${BLUE}, ${LIGHT_BLUE})`,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 32,
-            fontWeight: 900,
-            color: WHITE,
-            marginBottom: 12,
-          }}
-        >
-          Z
-        </div>
-        <div style={{ width: 140, height: 18, background: "rgba(255,255,255,0.2)", borderRadius: 4, marginBottom: 8 }} />
-        <div style={{ width: 100, height: 14, background: "rgba(255,255,255,0.1)", borderRadius: 4, marginBottom: 28 }} />
-        <div
-          style={{
-            width: 200,
-            height: 44,
-            background: BLUE,
-            borderRadius: 22,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 16,
-            fontWeight: 700,
-            color: WHITE,
-            marginBottom: 20,
-          }}
-        >
-          Connect
-        </div>
-        <div
-          style={{
-            fontSize: 12,
-            color: "rgba(255,255,255,0.4)",
-            letterSpacing: "0.06em",
-            textAlign: "center",
-          }}
-        >
-          No personal info shared
-        </div>
-        <div style={{ marginTop: 32, width: "80%", display: "flex", flexDirection: "column", gap: 12 }}>
-          {[0.15, 0.1, 0.12].map((op, i) => (
-            <div key={i} style={{ width: "100%", height: 14, background: `rgba(255,255,255,${op})`, borderRadius: 4 }} />
-          ))}
-        </div>
-      </div>
-
-      <div
-        style={{
-          position: "absolute",
-          bottom: 10,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: 100,
-          height: 4,
-          background: "rgba(255,255,255,0.25)",
-          borderRadius: 2,
-          zIndex: 10,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition: "top",
+          display: "block",
         }}
       />
     </div>
-  );
-};
+
+    {/* Home indicator */}
+    <div
+      style={{
+        position: "absolute",
+        bottom: 10,
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: 110,
+        height: 4,
+        background: "rgba(255,255,255,0.25)",
+        borderRadius: 2,
+        zIndex: 10,
+      }}
+    />
+  </div>
+);
 
 export const SceneScanning: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const containerIn = Math.min(
+  // Phone slides in
+  const phoneIn = Math.min(
     spring({ frame, fps, config: { damping: 20, stiffness: 160 } }),
     1
   );
-  const scanProgress = Math.min(frame / 45, 1);
-  const profileIn = Math.min(
-    spring({ frame: frame - 45, fps, config: { damping: 18, stiffness: 120 } }),
-    1
-  );
+
+  // video1 shows for first ~3s (90 frames), then cross-dissolves out over next 30 frames
+  const videoOpacity = interpolate(frame, [0, 10, 80, 115], [0, 1, 1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  // profile image fades in starting at frame 80, fully visible by frame 120
+  const profileOpacity = interpolate(frame, [80, 120], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  // Text lines — stagger around the cross-dissolve moment
   const line1In = Math.min(
     spring({ frame: frame - 8, fps, config: { damping: 20, stiffness: 200 } }),
     1
   );
   const line2In = Math.min(
-    spring({ frame: frame - 28, fps, config: { damping: 20, stiffness: 200 } }),
+    spring({ frame: frame - 85, fps, config: { damping: 20, stiffness: 200 } }),
     1
   );
   const privacyIn = Math.min(
-    spring({ frame: frame - 55, fps, config: { damping: 20, stiffness: 200 } }),
+    spring({ frame: frame - 115, fps, config: { damping: 20, stiffness: 200 } }),
     1
   );
 
@@ -200,18 +158,18 @@ export const SceneScanning: React.FC = () => {
         alignItems: "center",
         justifyContent: "center",
         gap: 120,
-        opacity: containerIn,
       }}
     >
-      <div
-        style={{
-          flex: "0 0 auto",
-          transform: `translateY(${interpolate(containerIn, [0, 1], [30, 0])}px)`,
-        }}
-      >
-        <PhoneMockup slideUp={scanProgress} profileIn={profileIn} />
+      {/* Left: phone — video dissolving to profile */}
+      <div style={{ flex: "0 0 auto" }}>
+        <PhoneScanToProfile
+          phoneIn={phoneIn}
+          videoOpacity={videoOpacity}
+          profileOpacity={profileOpacity}
+        />
       </div>
 
+      {/* Right: text */}
       <div style={{ flex: "0 0 auto", maxWidth: 700 }}>
         <div
           style={{

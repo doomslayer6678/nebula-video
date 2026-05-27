@@ -1,30 +1,10 @@
 import React from "react";
-import { useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
+import { useCurrentFrame, useVideoConfig, spring, interpolate, staticFile, Img } from "remotion";
 
 const BG = "#0F1B3D";
 const BLUE = "#1847F5";
 const LIGHT_BLUE = "#4D8EF7";
 const WHITE = "#FFFFFF";
-
-const HexLogo: React.FC<{ size: number; opacity: number }> = ({ size, opacity }) => (
-  <svg width={size} height={size} viewBox="0 0 100 100" style={{ opacity }}>
-    <polygon
-      points="50,3 93,26 93,74 50,97 7,74 7,26"
-      fill={BLUE}
-    />
-    <text
-      x="50"
-      y="68"
-      textAnchor="middle"
-      fill={WHITE}
-      fontSize="52"
-      fontWeight="900"
-      fontFamily='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-    >
-      Z
-    </text>
-  </svg>
-);
 
 export const SceneOpening: React.FC = () => {
   const frame = useCurrentFrame();
@@ -61,9 +41,20 @@ export const SceneOpening: React.FC = () => {
         justifyContent: "center",
       }}
     >
-      {/* Logo */}
-      <div style={{ marginBottom: 32, opacity: logoIn, transform: `scale(${interpolate(logoIn, [0, 1], [0.6, 1])})` }}>
-        <HexLogo size={80} opacity={1} />
+      {/* Real logo */}
+      <div
+        style={{
+          marginBottom: 32,
+          opacity: logoIn,
+          transform: `scale(${interpolate(logoIn, [0, 1], [0.6, 1])})`,
+          width: 88,
+          height: 88,
+        }}
+      >
+        <Img
+          src={staticFile("logo.png")}
+          style={{ width: "100%", height: "100%", objectFit: "contain" }}
+        />
       </div>
 
       {/* Accent bar */}

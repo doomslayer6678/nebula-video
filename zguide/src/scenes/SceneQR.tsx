@@ -1,84 +1,77 @@
 import React from "react";
-import { useCurrentFrame, useVideoConfig, spring, interpolate, staticFile } from "remotion";
+import {
+  useCurrentFrame,
+  useVideoConfig,
+  spring,
+  interpolate,
+  staticFile,
+  OffthreadVideo,
+} from "remotion";
 
 const BG = "#0F1B3D";
 const BLUE = "#1847F5";
 const LIGHT_BLUE = "#4D8EF7";
 const WHITE = "#FFFFFF";
 
-const QRPlaceholder: React.FC<{ scale: number; glow: number }> = ({ scale, glow }) => {
-  const qr: number[][] = [
-    [1,1,1,1,1,1,1,0,0,1,0,1,0,0,1,1,1,1,1,1,1],
-    [1,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0,0,0,0,0,1],
-    [1,0,1,1,1,0,1,0,0,1,0,1,0,0,1,0,1,1,1,0,1],
-    [1,0,1,1,1,0,1,0,1,0,0,0,1,0,1,0,1,1,1,0,1],
-    [1,0,1,1,1,0,1,0,0,1,1,0,0,0,1,0,1,1,1,0,1],
-    [1,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0,0,0,0,0,1],
-    [1,1,1,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1],
-    [0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,0],
-    [0,1,0,1,1,0,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0],
-    [1,0,1,0,0,1,0,0,1,0,1,0,0,1,0,1,0,0,1,0,1],
-    [0,1,0,1,0,0,1,1,0,1,0,1,1,0,1,0,1,0,0,1,0],
-    [1,0,1,0,1,1,0,0,1,0,1,0,0,1,0,1,0,1,1,0,1],
-    [0,1,0,1,0,0,1,1,0,1,1,1,0,0,1,0,1,0,0,1,0],
-    [0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0],
-    [1,1,1,1,1,1,1,0,0,1,0,1,0,1,0,1,0,1,1,0,1],
-    [1,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1,0],
-    [1,0,1,1,1,0,1,0,0,1,0,1,0,1,0,1,0,1,1,0,1],
-    [1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1,0],
-    [1,0,1,1,1,0,1,0,0,1,0,1,0,1,0,1,0,1,0,0,1],
-    [1,0,0,0,0,0,1,0,1,0,1,0,1,0,0,0,0,0,1,0,1],
-    [1,1,1,1,1,1,1,0,0,1,0,1,0,1,0,1,0,1,0,1,0],
-  ];
-
-  const cellSize = 18 * scale;
-  const padding = 20 * scale;
-
-  return (
+const PhoneWithVideo: React.FC<{ slideIn: number }> = ({ slideIn }) => (
+  <div
+    style={{
+      position: "relative",
+      width: 360,
+      height: 780,
+      background: "#000",
+      borderRadius: 48,
+      border: "2px solid rgba(255,255,255,0.15)",
+      boxShadow:
+        "0 0 0 1px rgba(0,0,0,0.7), 0 48px 120px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08)",
+      overflow: "hidden",
+      flexShrink: 0,
+      opacity: slideIn,
+      transform: `translateY(${interpolate(slideIn, [0, 1], [40, 0])}px)`,
+    }}
+  >
+    {/* Dynamic Island */}
     <div
       style={{
-        background: WHITE,
-        borderRadius: 16 * scale,
-        padding: padding,
-        boxShadow: `0 0 ${60 * glow}px ${20 * glow}px rgba(72, 142, 247, 0.35)`,
-        display: "inline-block",
+        position: "absolute",
+        top: 12,
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: 96,
+        height: 24,
+        background: "#000",
+        borderRadius: 12,
+        zIndex: 10,
       }}
-    >
-      <svg width={21 * cellSize} height={21 * cellSize}>
-        {qr.map((row, rowIdx) =>
-          row.map((cell, colIdx) =>
-            cell === 1 ? (
-              <rect
-                key={`${rowIdx}-${colIdx}`}
-                x={colIdx * cellSize}
-                y={rowIdx * cellSize}
-                width={cellSize - 1}
-                height={cellSize - 1}
-                fill="#0F1B3D"
-                rx={1}
-              />
-            ) : null
-          )
-        )}
-        <polygon
-          points={`${10.5*cellSize},${8.5*cellSize} ${12.5*cellSize},${9.5*cellSize} ${12.5*cellSize},${11.5*cellSize} ${10.5*cellSize},${12.5*cellSize} ${8.5*cellSize},${11.5*cellSize} ${8.5*cellSize},${9.5*cellSize}`}
-          fill={BLUE}
-        />
-        <text
-          x={10.5 * cellSize}
-          y={11.5 * cellSize}
-          textAnchor="middle"
-          fill="white"
-          fontSize={cellSize * 1.8}
-          fontWeight="900"
-          fontFamily="Arial, sans-serif"
-        >
-          Z
-        </text>
-      </svg>
-    </div>
-  );
-};
+    />
+    {/* Video fills the phone screen */}
+    <OffthreadVideo
+      src={staticFile("video1.mov")}
+      style={{
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+        objectPosition: "top",
+        display: "block",
+      }}
+      muted
+    />
+    {/* Home indicator */}
+    <div
+      style={{
+        position: "absolute",
+        bottom: 10,
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: 110,
+        height: 4,
+        background: "rgba(255,255,255,0.25)",
+        borderRadius: 2,
+        zIndex: 10,
+      }}
+    />
+  </div>
+);
 
 export const SceneQR: React.FC = () => {
   const frame = useCurrentFrame();
@@ -88,8 +81,8 @@ export const SceneQR: React.FC = () => {
     spring({ frame, fps, config: { damping: 20, stiffness: 180 } }),
     1
   );
-  const qrIn = Math.min(
-    spring({ frame: frame - 12, fps, config: { damping: 16, stiffness: 140 } }),
+  const phoneIn = Math.min(
+    spring({ frame: frame - 10, fps, config: { damping: 16, stiffness: 140 } }),
     1
   );
   const line1In = Math.min(
@@ -100,10 +93,6 @@ export const SceneQR: React.FC = () => {
     spring({ frame: frame - 20, fps, config: { damping: 20, stiffness: 200 } }),
     1
   );
-
-  const pulseGlow = frame > 30
-    ? 0.7 + 0.3 * Math.sin((frame - 30) * 0.12)
-    : qrIn;
 
   return (
     <div
@@ -119,6 +108,7 @@ export const SceneQR: React.FC = () => {
         opacity: containerIn,
       }}
     >
+      {/* Left: text */}
       <div style={{ flex: "0 0 auto", maxWidth: 700 }}>
         <div
           style={{
@@ -160,26 +150,9 @@ export const SceneQR: React.FC = () => {
         </div>
       </div>
 
-      <div
-        style={{
-          flex: "0 0 auto",
-          opacity: qrIn,
-          transform: `scale(${interpolate(qrIn, [0, 1], [0.7, 1])}) rotate(${interpolate(qrIn, [0, 1], [-6, 0])}deg)`,
-        }}
-      >
-        <QRPlaceholder scale={1.1} glow={pulseGlow} />
-        <div
-          style={{
-            textAlign: "center",
-            marginTop: 20,
-            fontSize: 22,
-            fontWeight: 600,
-            color: "rgba(255,255,255,0.45)",
-            letterSpacing: "0.08em",
-          }}
-        >
-          SCAN WITH Z GUIDE
-        </div>
+      {/* Right: phone with live video */}
+      <div style={{ flex: "0 0 auto" }}>
+        <PhoneWithVideo slideIn={phoneIn} />
       </div>
     </div>
   );
